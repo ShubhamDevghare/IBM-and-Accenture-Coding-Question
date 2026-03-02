@@ -32,7 +32,6 @@ result.toString(): This converts the StringBuilder object (which accumulates the
 .trim(): This removes any leading or trailing whitespace from the resulting string.
 Since we append a space after each word in the loop, the final string might have an extra space at the end.
 The trim() method helps get rid of that
-
  */
 import java.util.Scanner;
 
