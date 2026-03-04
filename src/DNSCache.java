@@ -56,3 +56,32 @@ public class DNSCache {
         System.out.println(getMinTime(cache_size, cache_time, server_time, urls));
     }
 }
+/*
+In the Java solution using LinkedList (as shown earlier), the most recent URL is always kept at the end of the list. The list behaves like an LRU cache.
+
+1️⃣ Where the most recent URL is stored ?
+The most recently used URL is stored at the end of the list using:
+      cache.addLast(url);
+
+So the rightmost element in the LinkedList is the most recent URL.
+
+Example: [a.com, b.com, c.com]          Here:
+                                        a.com → Least Recently Used (LRU)
+                                        c.com → Most Recently Used (MRU)
+2️⃣ Where the URL is added ?
+Whenever a URL is accessed (hit or miss), it is added to the end of the cache:
+      cache.addLast(url);
+This means it becomes the most recently used URL.
+
+3️⃣ When a URL is already present (Cache Hit)
+We first remove the old position and then add it to the end to mark it as most recent.
+
+            cache.remove(url);
+            cache.addLast(url);
+
+4️⃣ When cache is full (Cache Miss)
+We remove the least recently used URL, which is at the front of the list:
+          cache.removeFirst();
+Then add the new URL at the end:
+          cache.addLast(url);
+ */
