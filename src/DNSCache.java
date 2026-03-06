@@ -13,6 +13,61 @@ Given a list of n URLs visited as an array of strings, urls, determine the minim
 Note: New DNS requests are dynamically added to the cache. If the cache exceeds cache_size, remove the least recently
 used URL-IP mapping.
  */
+
+/*
+Problem Summary
+==============
+You have:
+        - n functions with IDs 0 to n-1
+        - A single-threaded CPU
+        - Execution logs that show when functions start and end
+Because the CPU is single-threaded:
+        - If a new function starts while another is running → the current function pauses (preempted).
+        - When the new function finishes → the previous function resumes.
+Your task:
+👉 Return the exclusive execution time of each function.
+
+Exclusive time = time spent in the function excluding time spent in child function calls.
+
+Log Format
+----------
+Each log looks like:          function_id:start:timestamp
+                              function_id:end:timestamp
+Ex:
+n = 2
+
+logs = [
+"0:start:0",
+"1:start:2",
+"1:end:5",
+"0:end:6"
+]
+
+Execution Timeline
+time: 0 1 2 3 4 5 6
+      |---0---|
+          |---1---|
+
+ Explanation:
+
+Function 0 starts at 0
+Function 1 starts at 2 → function 0 pauses
+Function 1 ends at 5
+Function 0 resumes
+Function 0 ends at 6
+Exclusive times:
+               Function 0 = (0→2) + (6→6) = 3
+               Function 1 = (2→5) = 4
+Result: [3,4]
+ */
+/*
+Key Idea (Stack)
+----------------
+Use a stack because functions behave like nested calls.
+
+Stack keeps track of currently running functions.
+We also track the previous timestamp.
+ */
 import java.util.*;
 
 public class DNSCache {
