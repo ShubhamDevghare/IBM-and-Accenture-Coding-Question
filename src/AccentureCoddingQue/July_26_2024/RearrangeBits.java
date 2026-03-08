@@ -83,9 +83,9 @@ import java.util.Scanner;
                 count++;      // Increment count for each set bit cleared
             }
 */
-            while (n != 0) {
-                count += n & 1;
-                n >>= 1;
+            while (n != 0) {    //n & 1 → checks the last bit of n
+                count += n & 1; //If last bit is 1, it adds 1 to count
+                n >>= 1;        //n >>= 1 → right shift, removing the last bit
             }
             int ans = (int)Math.pow(2, count) - 1;
 
