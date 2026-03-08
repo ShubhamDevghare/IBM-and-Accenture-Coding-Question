@@ -57,7 +57,7 @@ public class TriangleToyAnalyzer {
             int c = Integer.parseInt(parts[2]);
 
             int max = Math.max(a, Math.max(b, c));
-            int sum = a + b + c - max;
+            int sum = a + b + c - max;   // You can use a + b, but the problem is you don't know which two sides are the smallest.
 
             // Check triangle validity
             if (sum <= max) {

@@ -48,7 +48,7 @@ Only elements > K are reduced.
 | 9        | 9 - 5     | 4         |
 | 10       | 10 - 5    | 5         |
 | 15       | 15 - 5    | 10        |
-| 5        | unchanged | 5         |
+| 5        | unchanged | 5         |----> bccz Que said strictly greater than K
 
 New array: [7, 4, 5, 10, 5]
 

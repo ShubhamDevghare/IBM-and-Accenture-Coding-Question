@@ -1,0 +1,45 @@
+Why we use (n-m)
+-----------------
+bcz: Substring Must Fit Completely
+
+If we place "bcd" inside "a?c?e", it must fit fully inside the word.
+
+Positions in "a?c?e":
+
+index: 0 1 2 3 4
+       a ? c ? e
+
+Check Possible Start Positions
+Start at index 0
+a ? c ? e
+b c d
+
+Uses indices:
+0,1,2
+Valid ✔
+
+Start at index 1
+a ? c ? e
+  b c d
+
+Uses indices:
+1,2,3
+Valid ✔
+
+Start at index 2
+a ? c ? e
+    b c d
+
+Uses indices:
+2,3,4
+Valid ✔
+
+Start at index 3
+a ? c ? e
+      b c d
+
+Needs indices:
+3,4,5
+
+But index 5 does not exist ❌
+So not allowed.

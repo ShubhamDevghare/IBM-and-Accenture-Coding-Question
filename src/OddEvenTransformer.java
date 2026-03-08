@@ -47,7 +47,7 @@ public class OddEvenTransformer {
     public static void transformArray(int[] numbers, int k) {
 
         if (k % 2 == 0) {
-            return; // no change needed
+            return ; // no change needed
         }
 
         for (int i = 0; i < numbers.length; i++) {

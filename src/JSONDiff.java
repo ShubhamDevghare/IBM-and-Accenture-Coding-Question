@@ -79,3 +79,61 @@ public class JSONDiff {
         System.out.println(getJSONDiff(json1, json2));
     }
 }
+/*
+
+import java.util.*;
+
+public class JSONDiff {
+
+    public static String[] getJSONDiff(String json1, String json2) {
+
+        Map<String, String> map1 = parseJson(json1);
+        Map<String, String> map2 = parseJson(json2);
+
+        List<String> result = new ArrayList<>();
+
+        for (String key : map1.keySet()) {
+            if (map2.containsKey(key)) {
+                if (!map1.get(key).equals(map2.get(key))) {
+                    result.add(key);
+                }
+            }
+        }
+
+        Collections.sort(result);
+        return result.toArray(new String[0]);
+    }
+
+    private static Map<String, String> parseJson(String json) {
+        Map<String, String> map = new HashMap<>();
+
+        json = json.substring(1, json.length() - 1); // remove { }
+
+        if (json.trim().isEmpty()) return map;
+
+        String[] pairs = json.split(",");
+
+        for (String pair : pairs) {
+            String[] kv = pair.split(":");
+
+            String key = kv[0].replace("\"", "").trim();
+            String value = kv[1].replace("\"", "").trim();
+
+            map.put(key, value);
+        }
+
+        return map;
+    }
+
+    public static void main(String[] args) {
+        String json1 = "{\"hello\":\"world\",\"hi\":\"hello\",\"you\":\"me\"}";
+        String json2 = "{\"hello\":\"world\",\"hi\":\"helloo\",\"you\":\"me\"}";
+
+        String[] result = getJSONDiff(json1, json2);
+
+        System.out.println(Arrays.toString(result));
+    }
+}
+
+
+ */

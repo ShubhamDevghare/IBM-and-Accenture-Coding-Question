@@ -27,7 +27,6 @@ public class MinimalMove {
         for (char c : word.toCharArray()) {
             freq[c - 'a']++;
         }
-
         int totalMoves = 0;
         for (int count : freq) {
             totalMoves += count / 2;

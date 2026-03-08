@@ -22,21 +22,26 @@ It is guaranteed that at least one tag has an even number.
 public class MaxEvenSum {
 
     public static int maxEvenSum(int[] arr) {
-        int totalSum = 0;
+
+        int sum = 0;
         int smallestOdd = Integer.MAX_VALUE;
 
         for (int num : arr) {
-            totalSum += num;
-            if (num % 2 != 0) {
-                smallestOdd = Math.min(smallestOdd, num);
+
+            if (num > 0) {
+                sum += num;
+
+                if (num % 2 != 0) {
+                    smallestOdd = Math.min(smallestOdd, num);
+                }
             }
         }
 
-        if (totalSum % 2 == 0) {
-            return totalSum;
-        } else {
-            return totalSum - smallestOdd;
+        if (sum % 2 == 0) {
+            return sum;
         }
+
+        return sum - smallestOdd;
     }
 
     public static void main(String[] args) {
@@ -44,3 +49,8 @@ public class MaxEvenSum {
         System.out.println(maxEvenSum(arr));
     }
 }
+/*
+Take only positive numbers (since negatives reduce sum).
+Track the smallest odd positive number.
+If the sum is odd → remove that smallest odd.
+ */

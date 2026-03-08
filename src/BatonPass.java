@@ -85,40 +85,98 @@ So at time = 5:
 ✅ Output
 [3, 2]
  */
-import java.util.*;
 
 public class BatonPass {
-
     public static int[] batonPass(int friends, long time) {
-        int n = friends;
+        // Use long for cycle calculations to prevent overflow
+        long n = (long) friends;
+        long cycleLength = 2 * (n - 1);
 
-        // One complete forward and backward cycle
-        long cycle = 2L * (n - 1);
+        // Find the position within the current cycle
+        long step = time % cycleLength;
 
-        // Determine position in cycle
-        long k = (time - 1) % cycle;
+        int passer, receiver;
 
-        int holder;
-        int receiver;
-
-        if (k < n - 1) {
-            // Forward direction
-            holder = (int) (1 + k);
-            receiver = holder + 1;
+        // If step is less than the distance to reach the end (n-1)
+        if (step < n - 1) {
+            // Moving Forward: 1 -> 2 -> 3...
+            passer = (int) (step + 1);
+            receiver = (int) (step + 2);
         } else {
-            // Backward direction
-            holder = (int) (n - (k - (n - 1)));
-            receiver = holder - 1;
+            // Moving Backward: n -> n-1 -> n-2...
+            long stepsBackFromEnd = step - (n - 1);
+            passer = (int) (n - stepsBackFromEnd);
+            receiver = (int) (n - stepsBackFromEnd - 1);
         }
 
-        return new int[]{holder, receiver};
+        return new int[]{passer, receiver};
     }
 
     public static void main(String[] args) {
-        int friends = 4;
-        long time = 5;
-
-        int[] result = batonPass(friends, time);
-        System.out.println(result[0] + " " + result[1]); // Output: 3 2
+        // Test Example
+        int[] result = batonPass(4, 5L);
+        System.out.println("[" + result[0] + ", " + result[1] + "]"); // Output: [3, 2]
     }
 }
+/*
+A full cycle is the number of passes it takes to get from the start, to the end,
+and back to the position just before the start.
+*  Total Cycle Length = Forward movement + Backward movement = (n − 1) + (n − 1) = 2(n − 1)
+
+The step variable tells us exactly how many passes have occurred in the unfinished round trip.
+*  step = time % cycleLength
+
+Case 1: Forward Phase
+If:
+      step < n - 1
+We are still moving forward.
+Examples:
+step = 0 → Friend 1
+step = 1 → Friend 2
+step = 2 → Friend 3
+Formula:
+        passer = step + 1
+
+Case 2: Backward Phase
+If:
+   step ≥ n - 1
+
+The baton reached the end and is now coming back.
+*  stepsBackFromEnd = step - (n - 1)                //ie  totalStep - forward Steps
+
+Then move back from n.
+Formula:
+      passer = n - stepsBackFromEnd
+
+
+Example
+======
+friends = 4
+time = 5
+
+1. Cycle Length = 2 × (4 − 1) = 6
+2. Step in current cycle = step = time % cycleLength = 5 % 6 = 5
+3. Determine phase:
+                step ≥ (n - 1)
+                   5 ≥ (4 − 1)
+                   5 ≥ 3
+So it is the backward phase.
+4. stepsBackFromEnd = step - (n - 1)
+                    = 5 − 3 = 2
+5. passer = n - stepsBackFromEnd
+          = 4 − 2 = 3
+
+
+moving back" starts from the moment the baton hits friend n
+___________________________________________________________________________
+| Time | Action            | Position (Friend) | Phase                    |
+| ---: | ----------------- | ------------------| ------------------------ |
+|    0 | Friend 1 holds it |          1        | Start                    |
+|    1 | Pass 1: 1 → 2     |          2        | Forward                  |
+|    2 | Pass 2: 2 → 3     |          3        | Forward                  |
+|    3 | Pass 3: 3 → 4     |          4        | Hit the end!             |
+|    4 | Pass 4: 4 → 3     |          3        | Backward (1st step back) |
+|    5 | Pass 5: 3 → 2     |          2        | Backward (2nd step back) |
+
+
+ */

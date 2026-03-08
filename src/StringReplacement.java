@@ -21,6 +21,19 @@ Input:
 Output :
        abcde
  */
+/*
+What the Question is Asking
+---------------------------------
+You are given two strings:
+word → may contain letters and '?'
+substr → contains only lowercase letters
+
+Your task is to replace every ? in word with a lowercase letter (a–z) such that:
+
+substr must appear at least once as a substring in word.
+Among all possible valid strings, choose the lexicographically smallest string.
+If it is impossible to make substr appear, return "-1".
+ */
 public class StringReplacement {
 
     public static String getSmallestString(String word, String substr) {
@@ -28,7 +41,7 @@ public class StringReplacement {
         int m = substr.length();
         String smallest = null;
 
-        for (int i = 0; i <= n - m; i++) {
+        for (int i = 0; i <= n - m; i++) {   //Substring Must Fit Completely thats why we use n-m
             char[] temp = word.toCharArray();
             boolean possible = true;
 

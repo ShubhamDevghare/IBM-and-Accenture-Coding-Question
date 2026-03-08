@@ -41,7 +41,7 @@ Return 8.
 🔹 How TreeMap Works
 ---------------------
 TreeMap in Java:
-
+        _____
 - Stores keys in sorted (ascending) order
 - Internally implemented using a Red-Black Tree
 - All operations like firstKey() and lastKey() are O(log n)
