@@ -17,7 +17,11 @@ z -> 111...
 0 - represent space
 
  */
-
+/*
+'A' + 0  -> 'A'
+'A' + 1  -> 'B'
+'A' + 2  -> 'C'
+ */
 import java.util.Scanner;
 
 public class StringDecoder {

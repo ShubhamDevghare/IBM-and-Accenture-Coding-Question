@@ -1,0 +1,38 @@
+🔥 Arrays (Most Frequent)
+
+Two Sum → use a hash map for O(n)
+Product of array except self → prefix/suffix products
+Move zeros to end → two-pointer in-place
+Merge intervals → sort by start, merge overlaps
+Subarray with given sum → sliding window
+
+
+🔤 Strings
+
+Check if a string is a palindrome → two pointers (left & right)
+Longest substring without repeating characters
+Anagram check → frequency count or sort
+Reverse words in a sentence → split, reverse, join
+Longest palindromic substring → expand around center
+
+
+🔗 Linked Lists
+
+Reverse a linked list
+Detect a cycle → Floyd's algorithm (fast/slow pointers)
+Find middle of a linked list
+
+
+🌳 Trees & Graphs
+
+Level order traversal (BFS)
+Check if a binary tree is balanced
+Find height of a tree
+
+
+🧮 Math / Logic
+
+Find HCF/GCD of two numbers
+Find second highest salary (SQL)
+Minimum moves to reach a value
+

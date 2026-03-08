@@ -1,6 +1,7 @@
 package AccentureCoddingQue.Aug_23_2024;
-
 import java.util.Scanner;
+
+//Que:: This Java program counts how many times the second largest element appears in a sorted array.
 
 public class SecondLargestCounter {
 
@@ -52,3 +53,6 @@ public class SecondLargestCounter {
         sc.close();
     }
 }
+
+// arr : 1 2 3 4 5 5 6 6 --> sorted Array
+

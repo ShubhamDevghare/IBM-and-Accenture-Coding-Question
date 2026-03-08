@@ -9,7 +9,6 @@ Given an initial state of all bulbs, Find the minimum number of switches you hav
 You can press the same switch multiple times.
 
 Note: O represents the bulb is off and 1 represents the bulb is on.
-
  */
 public class MinRightFlips {
 

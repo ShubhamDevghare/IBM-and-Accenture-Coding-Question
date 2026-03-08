@@ -4,7 +4,7 @@ Que:
 A googly prime number is defined as a number that is derived from the sum of its individual
 digits.
 For example, if N = 43, the sum of its individual digits is 4+3 = 7,
-which is prime making it a googly prime number. 4
+which is prime making it a googly prime number.
 Your task is to find whether the current number is googly prime number or not.
 
 What is Googly prime number?
