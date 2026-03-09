@@ -93,7 +93,12 @@ public class Top100CodesJava {
     static boolean isPalindromeNumber(int n) {
         return n == reverseNumber(n);
     }
-
+/*
+An Armstrong number (or narcissistic number) is a positive integer equal to the sum of its own digits,
+ each raised to the power of the total number of digits.
+ For example, 153 is a 3-digit Armstrong number because
+ 1³ + 5³ + 3³ = 1 + 125 + 27 = 153
+*/
     // Q14. Armstrong Number
     static boolean isArmstrong(int n) {
         int temp = n, sum = 0, digits = String.valueOf(n).length();
@@ -146,23 +151,37 @@ public class Top100CodesJava {
         return Math.pow(base, exp);
     }
 
-    // Q20. Factors of a Number
+    // Q20. Factors of a Number  // "factor" : A factor of a number is a number that divides another number completely
     static void factors(int n) {
         System.out.print("Factors of " + n + ": ");
         for (int i = 1; i <= n; i++)
             if (n % i == 0) System.out.print(i + " ");
         System.out.println();
     }
-
+/*
+A prime factor is a factor of a number that is also a prime number
+ */
     // Q21. Prime Factors of a Number
     static void primeFactors(int n) {
         System.out.print("Prime factors of " + n + ": ");
-        for (int i = 2; i <= n; i++) {
+        for (int i = 2; i <= n; i++) { // start from 2 bcz 2 is first prime no
             while (n % i == 0) { System.out.print(i + " "); n /= i; }
         }
         System.out.println();
     }
-
+/*
+If
+Sum of factorial of digits = Original number
+then it is a Strong Number.
+Example: 145
+Digits: 1, 4, 5
+Factorials:
+1! = 1
+4! = 24
+5! = 120
+Sum:
+1 + 24 + 120 = 145
+ */
     // Q22. Strong Number
     static boolean isStrong(int n) {
         int temp = n, sum = 0;
@@ -172,7 +191,9 @@ public class Top100CodesJava {
         }
         return sum == n;
     }
-
+/*
+A Perfect Number is a number whose sum of its proper factors (excluding the number itself) is equal to the number.
+ */
     // Q23. Perfect Number
     static boolean isPerfect(int n) {
         int sum = 0;
@@ -180,25 +201,47 @@ public class Top100CodesJava {
             if (n % i == 0) sum += i;
         return sum == n;
     }
+/*
+A Perfect Square is a number that is obtained by multiplying an integer by itself.
+| Number | Calculation  | Perfect Square? |
+| ------ | ------------ | --------------- |
+| 4      | 2 × 2        | ✅ Yes           |
+| 9      | 3 × 3        | ✅ Yes           |
+| 16     | 4 × 4        | ✅ Yes           |
+| 25     | 5 × 5        | ✅ Yes           |
+| 10     | Not possible | ❌ No            |
 
+So perfect squares are:
+1, 4, 9, 16, 25, 36, 49, 64, 81, 100...
+ */
     // Q24. Perfect Square
     static boolean isPerfectSquare(int n) {
         int sq = (int) Math.sqrt(n);
         return sq * sq == n;
     }
-
+/*
+An Automorphic Number is a number whose square ends with the same number.
+Example : 5
+5² = 25
+The square 25 ends with 5.
+==> 5 is an Automorphic Number
+ */
     // Q25. Automorphic Number
     static boolean isAutomorphic(int n) {
         int sq = n * n;
         int digits = String.valueOf(n).length();
         return sq % (int) Math.pow(10, digits) == n;
     }
-
+/*
+A Harshad Number (also called Niven Number) is a number that is divisible by the sum of its digits.
+ */
     // Q26. Harshad Number (Niven Number)
     static boolean isHarshad(int n) {
         return n % sumOfDigits(n) == 0;
     }
-
+/*
+An Abundant Number is a number where the sum of its proper factors is greater than the number itself.
+ */
     // Q27. Abundant Number
     static boolean isAbundant(int n) {
         int sum = 0;
@@ -206,7 +249,12 @@ public class Top100CodesJava {
             if (n % i == 0) sum += i;
         return sum > n;
     }
-
+/*
+Two numbers a and b are amicable if:
+Sum of factors of a = b
+And
+Sum of factors of b = a
+ */
     // Q28. Friendly Pair (Amicable Numbers)
     static boolean isFriendlyPair(int a, int b) {
         int sumA = 0, sumB = 0;
@@ -574,14 +622,21 @@ public class Top100CodesJava {
     }
 
     // Q77. Second Smallest Element
-    static int secondSmallest(int[] arr) {
-        int min = Integer.MAX_VALUE, second = Integer.MAX_VALUE;
-        for (int x : arr) {
-            if (x < min) { second = min; min = x; }
-            else if (x < second && x != min) second = x;
+        static int secondSmallest(int[] arr) {
+            int smallest = Integer.MAX_VALUE;
+            int secondSmallest = Integer.MAX_VALUE;
+
+            for (int num : arr) {
+                if (num < smallest) {
+                    secondSmallest = smallest;
+                    smallest = num;
+                }
+                else if (num > smallest && num < secondSmallest) {
+                    secondSmallest = num;
+                }
+            }
+            return secondSmallest;
         }
-        return second;
-    }
 
     // Q78. Sum of Elements in Array
     static int arraySum(int[] arr) {
@@ -592,28 +647,49 @@ public class Top100CodesJava {
 
     // Q79. Reverse an Array
     static void reverseArray(int[] arr) {
-        for (int i = 0, j = arr.length - 1; i < j; i++, j--) {
-            int t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+        int start = 0;
+        int end = arr.length - 1;
+
+        while (start < end) {
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+
+            start++;
+            end--;
         }
     }
-
     // Q80. Sort First Half Ascending, Second Half Descending
     static void sortHalves(int[] arr) {
         Arrays.sort(arr);
         int mid = arr.length / 2;
         int[] result = new int[arr.length];
-        for (int i = 0; i < mid; i++) result[i] = arr[i];
-        for (int i = mid, j = arr.length - 1; i < arr.length; i++, j--)
+
+        for (int i = 0; i < mid; i++) result[i] = arr[i];//First Half Ascending
+        for (int i = mid, j = arr.length - 1; i < arr.length; i++, j--) //Second Half Descending
             result[i] = arr[j];
         System.out.println("Sorted halves: " + Arrays.toString(result));
     }
-
+/*
+Exp of for above 2nd for loop
+------------------------
+i = mid             → start filling the second half of result array
+j = arr.length - 1  → start from the last element of sorted array
+i++                 → move forward in result
+j--                 → move backward in arr
+This makes the second half descending
+ */
     // Q81. Sort Array (Ascending)
     static void sortArray(int[] arr) {
         Arrays.sort(arr);
         System.out.println("Sorted: " + Arrays.toString(arr));
     }
-
+/*
+why we used LinkedHashMap , why not other map:
+----------------------------------------------
+LinkedHashMap maintains the insertion order.
+That means the elements will appear in the same order as the array.
+ */
     // Q82. Frequency of Elements
     static void frequencyOfElements(int[] arr) {
         Map<Integer, Integer> map = new LinkedHashMap<>();
@@ -625,7 +701,7 @@ public class Top100CodesJava {
     static void sortByFrequency(int[] arr) {
         Map<Integer, Integer> freq = new HashMap<>();
         for (int x : arr) freq.put(x, freq.getOrDefault(x, 0) + 1);
-        Integer[] boxed = Arrays.stream(arr).boxed().toArray(Integer[]::new);
+        Integer[] boxed = Arrays.stream(arr).boxed().toArray(Integer[]::new); // convert array to Integer for sorting
         Arrays.sort(boxed, (a, b) -> freq.get(b) - freq.get(a));
         System.out.println("Sorted by freq: " + Arrays.toString(boxed));
     }
@@ -637,7 +713,21 @@ public class Top100CodesJava {
             if (isPalindromeStr(s) && s.length() > longest.length()) longest = s;
         return longest;
     }
+/*
+Explanation :
 
+Arrays.stream(arr)
+→ Converts the array into a stream.
+
+.distinct()
+→ Removes duplicate elements.
+
+.count()
+→ Counts the number of unique elements.
+
+(int)
+→ count() returns long, so we convert it to int.
+ */
     // Q85. Count Distinct Elements
     static int countDistinct(int[] arr) {
         return (int) Arrays.stream(arr).distinct().count();
@@ -660,7 +750,36 @@ public class Top100CodesJava {
         freq.forEach((k, v) -> { if (v == 1) System.out.print(k + " "); });
         System.out.println();
     }
+/*
+    public static void nonRepeatingElements(String[] args) {
+        int[] arr = {2, 4, 5, 2, 3, 4, 6};
 
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int num : arr) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+
+        System.out.println("Non-Repeating Elements:");
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue() == 1) {
+                System.out.println(entry.getKey());
+            }
+        }
+    }
+
+ */
+
+/*
+Arrays.stream(arr)
+→ Converts the array into a stream.
+.distinct()
+→ Removes duplicate elements.
+.toArray()
+→ Converts the stream back to an array.
+So it returns a new array containing only unique elements.
+ */
     // Q88. Remove Duplicate Elements
     static int[] removeDuplicates(int[] arr) {
         return Arrays.stream(arr).distinct().toArray();
@@ -715,7 +834,9 @@ public class Top100CodesJava {
         }
         return result;
     }
-
+/*
+Two arrays are disjoint if they do not have any common element.
+ */
     // Q94. Arrays are Disjoint or Not
     static boolean areDisjoint(int[] a, int[] b) {
         Set<Integer> set = new HashSet<>();
@@ -771,6 +892,10 @@ public class Top100CodesJava {
         for (int x : arr) System.out.print(rank.get(x) + " ");
         System.out.println();
     }
+    /*
+    rank++ means:   Store current rank
+                    Then increase rank
+     */
 
     // Q100. Equilibrium Index of an Array
     static int equilibriumIndex(int[] arr) {
@@ -791,7 +916,53 @@ public class Top100CodesJava {
         reverse(arr, 0, n - 1);
         System.out.println("Left rotated: " + Arrays.toString(arr));
     }
+/*
+static void leftRotate(int[] arr, int d) {
+    int n = arr.length;
 
+    reverse(arr, 0, d - 1);
+    reverse(arr, d, n - 1);
+    reverse(arr, 0, n - 1);
+
+    for (int num : arr)
+        System.out.print(num + " ");
+}
+
+static void reverse(int[] arr, int start, int end) {
+    while (start < end) {
+        int temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+
+        start++;
+        end--;
+    }
+}
+ */
+    //Right Rotation:
+    /*
+    static void rightRotate(int[] arr, int d) {
+    int n = arr.length;
+
+    reverse(arr, 0, n - 1);
+    reverse(arr, 0, d - 1);
+    reverse(arr, d, n - 1);
+
+    for (int num : arr)
+        System.out.print(num + " ");
+}
+
+static void reverse(int[] arr, int start, int end) {
+    while (start < end) {
+        int temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+
+        start++;
+        end--;
+    }
+}
+     */
     // Q102. Block Swap Algorithm for Array Rotation
     static void blockSwap(int[] arr, int a, int b, int d) {
         for (int i = 0; i < d; i++) {
@@ -868,7 +1039,7 @@ public class Top100CodesJava {
         for (char c : s.toCharArray()) count++;
         return count;
     }
-
+// Toggle each character means changing uppercase letters to lowercase and lowercase letters to uppercase.
     // Q110. Toggle Each Character
     static String toggleCase(String s) {
         StringBuilder sb = new StringBuilder();
@@ -915,7 +1086,11 @@ public class Top100CodesJava {
     static String removeBrackets(String s) {
         return s.replaceAll("[(){}\\[\\]]", "");
     }
-
+/*
+Input:  "abc12xyz20p3"
+Numbers: 12, 20, 3
+Output: 35
+ */
     // Q118. Count Sum of Numbers in a String
     static int sumOfNumbersInString(String s) {
         int sum = 0;
@@ -959,7 +1134,11 @@ public class Top100CodesJava {
         freq.forEach((k, v) -> { if (v == 1) System.out.print(k + " "); });
         System.out.println();
     }
-
+/*
+An anagram is when two strings contain the same characters with the same frequency but arranged in a different order.
+Eg: listen
+    silent
+ */
     // Q122. Anagram Check
     static boolean isAnagram(String s1, String s2) {
         char[] a = s1.toLowerCase().toCharArray();
