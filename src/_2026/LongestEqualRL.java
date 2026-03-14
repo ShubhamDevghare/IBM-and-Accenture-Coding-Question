@@ -7,8 +7,8 @@ Output: 10
 */
 
 /*
-Solution:
------------
+Solution:🧠 The Logic: The "Net Balance" Technique
+-----------------------------------------------------
 If the "Position" (Balance) is the same at two different times, it means everything that
 happened between those two times canceled each other out.
   At Index 0, the balance was 1.
