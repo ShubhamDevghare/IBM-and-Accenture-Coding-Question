@@ -604,12 +604,38 @@ public class StringDSA30Questions {
         return new String(ch);
     }
 
+/* ============================================================
+Q29: Check if String is a Valid Shuffle of Two Others:
 
-    // ============================================================
-    // Q29: Check if String is a Valid Shuffle of Two Others
-    // Approach: Sort all three; interleave pointers through s1 & s2 matching s3
-    // Time: O(n log n), Space: O(n)
-    // ============================================================
+You are given three strings: str1, str2, result
+You must check whether result is formed by mixing (shuffling) characters of str1 and str2 while keeping the original
+order of characters from each string.
+  Key Rules:
+     1.All characters of str1 and str2 must appear in result.
+     2.The relative order of characters from each string must stay the same.
+     3.Characters from both strings can interleave.
+
+Example 1 (Valid Shuffle)
+--------------------------
+str1 = "abc"
+str2 = "def"
+result = "adbcef"
+
+Order of abc and def is preserved ✔
+So this is a valid shuffle.
+
+Example 2 (Invalid Shuffle)
+----------------------------
+str1 = "abc"
+str2 = "def"
+result = "abdfec"
+
+Here order of "def" changed (e comes before f correctly but c placed incorrectly relative to others),
+so it breaks the original sequence ❌.
+
+Approach: Sort all three; interleave pointers through s1 & s2 matching s3
+Time: O(n log n), Space: O(n)
+============================================================*/
     public static boolean isValidShuffle(String s1, String s2, String s3) {
         if (s1.length() + s2.length() != s3.length()) return false;
         // Verify same character counts
@@ -622,14 +648,37 @@ public class StringDSA30Questions {
         return isInterleave(s1, s2, s3);
     }
 
+    /*
+ ============================================================
+ Q30: Zigzag Conversion
 
-    // ============================================================
-    // Q30: Zigzag Conversion
-    // Approach: Simulate rows using a direction flag
-    // "PAYPALISHIRING" with numRows=3 → "PAHNAPLSIIGYIR"
-    // Time: O(n), Space: O(n)
+You are given:
+A string s
+A number of rows numRows
+You must write the string in a zigzag pattern and then read it row by row.
+Example
+s = "PAYPALISHIRING"
+numRows = 3
+Pattern becomes:
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+
+Now read row by row:
+Row1 → PAHN
+Row2 → APLSIIG
+Row3 → YIR
+Final output: PAHNAPLSIIGYIR
+
+ie:
+"PAYPALISHIRING" with numRows=3 → "PAHNAPLSIIGYIR"
+
+Time: O(n), Space: O(n)
+ */
     // ============================================================
     public static String zigzagConvert(String s, int numRows) {
+
         if (numRows == 1 || numRows >= s.length()) return s;
         StringBuilder[] rows = new StringBuilder[numRows];
         for (int i = 0; i < numRows; i++) rows[i] = new StringBuilder();
