@@ -547,12 +547,22 @@ public class StringDSA30Questions {
     }
 
 
-    // ============================================================
-    // Q26: Interleaving String
-    // Approach: 2D DP
-    // dp[i][j] = true if s3[0..i+j-1] is interleaving of s1[0..i-1] and s2[0..j-1]
-    // Time: O(m*n), Space: O(m*n)
-    // ============================================================
+/*============================================================
+Q26: Interleaving String
+Problem:
+Given three strings s1, s2, and s3, determine whether s3 is formed by an interleaving of s1 and s2.
+An interleaving of two strings means combining their characters while preserving the left-to-right order of characters
+from each string.
+Conditions :
+1. Characters from s1 and s2 can be mixed together.
+2. The relative order of characters from s1 must remain the same.
+3. The relative order of characters from s2 must remain the same.
+4. All characters from s1 and s2 must be used to form s3.
+
+Approach: 2D DP
+dp[i][j] = true if s3[0..i+j-1] is interleaving of s1[0..i-1] and s2[0..j-1]
+Time: O(m*n), Space: O(m*n)
+ ============================================================*/
     public static boolean isInterleave(String s1, String s2, String s3) {
         int m = s1.length(), n = s2.length();
         if (m + n != s3.length()) return false;
