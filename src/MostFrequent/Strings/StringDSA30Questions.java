@@ -374,17 +374,45 @@ public class StringDSA30Questions {
         return ans[0] == -1 ? "" : s.substring(ans[1], ans[2]);
     }
 
+    /* ============================================================
+Q19: Longest Repeating Character Replacement
+     Approach: Sliding window — keep track of max frequency char
+     Time: O(n), Space: O(1)
+    ============================================================*/
+/*
+Que: You are given a string s and an integer k. You can choose any character of the string and change it to any other
+     uppercase English character. You can perform this operation at most k times.
 
-    // ============================================================
-    // Q19: Longest Repeating Character Replacement
-    // Approach: Sliding window — keep track of max frequency char
-    // Time: O(n), Space: O(1)
-    // ============================================================
+Return the length of the longest substring containing the same letter you can get after performing the
+above operations.
+
+Example 1:
+---------
+Input: s = "AABABBA", k = 1
+Output: 4
+Explanation: Replace the one 'A' in the middle with 'B' and form "AABBBBA".
+The substring "BBBB" has the longest repeating letters, which is 4.
+There may exists other ways to achieve this answer too.
+
+*/
+    /*
+    Approch :
+  ------------
+    Instead of actually replacing characters, we:   **(means here we are not actually replacing characters we are other approch/logic)
+
+          Maintain a window [left, right]
+          Track the most frequent character count (maxCount) inside the window
+          Check if the window is valid using:
+          window size − maxCount  ≤ 𝑘
+          If this condition fails → shrink the window
+     */
     public static int characterReplacement(String s, int k) {
         int[] count = new int[26];
         int left = 0, maxCount = 0, maxLen = 0;
+
         for (int right = 0; right < s.length(); right++) {
             maxCount = Math.max(maxCount, ++count[s.charAt(right) - 'A']);
+
             // Window size - most frequent char > k → shrink from left
             while ((right - left + 1) - maxCount > k) {
                 count[s.charAt(left++) - 'A']--;
@@ -394,34 +422,112 @@ public class StringDSA30Questions {
         return maxLen;
     }
 
+    /* ============================================================
+     Q20: Decode Ways
+    Approach: Dynamic Programming
+    dp[i] = number of ways to decode s[0..i-1]
+    Time: O(n), Space: O(n)
 
-    // ============================================================
-    // Q20: Decode Ways
-    // Approach: Dynamic Programming
-    // dp[i] = number of ways to decode s[0..i-1]
-    // Time: O(n), Space: O(n)
-    // ============================================================
+ Que:  You are given a string s containing only digits. Each digit (or pair of digits) can be mapped to letters as follows:
+            '1' -> 'A'
+            '2' -> 'B'
+            ...
+            '26' -> 'Z'
+    Return the total number of ways to decode the string.
+Ex:
+   Input: "12"
+   Output: 2
+Explanation:
+   "12" → "AB" (1 2)
+   "12" → "L"  (12)
+
+ex:
+🔁 Step-by-Step Example: "226"
+_______________________________________________
+| i | Substring | oneDigit | twoDigit | dp[i] |
+| - | --------- | -------- | -------- | ----- |
+| 0 | ""        | -        | -        | 1     |
+| 1 | "2"       | 2        | -        | 1     |
+| 2 | "22"      | 2        | 22       | 2     |
+| 3 | "226"     | 6        | 26       | 3     |
+-----------------------------------------------
+
+Initial Setup:
+dp[0] = 1   // empty string
+dp[1] = 1   // "2"
+
+Step i = 2 → substring "22"
+  oneDigit = "2" ✅ valid
+  twoDigit = "22" ✅ valid
+
+Start:
+  dp[2] = 0
+  Add from dp[i-1]
+  dp[2] += dp[1]   → 0 + 1 = 1
+  Add from dp[i-2]
+  dp[2] += dp[0]   → 1 + 1 = 2
+  Final:
+  dp[2] = 2
+
+Step i = 3 → substring "226"
+oneDigit = "6" ✅ valid
+twoDigit = "26" ✅ valid
+
+Start:
+   dp[3] = 0
+   First line
+   dp[3] += dp[2]   → 0 + 2 = 2
+   👉 Ways so far:
+(2)(2)(6)
+(22)(6)
+   Second line
+   dp[3] += dp[1]   → 2 + 1 = 3
+👉 New way added:
+(2)(26)
+   Final Answer
+   dp[3] = 3
+    ============================================================*/
     public static int numDecodings(String s) {
-        if (s == null || s.charAt(0) == '0') return 0;
+        if (s == null || s.charAt(0) == '0') return 0; //If string is empty or starts with '0', no valid decoding.
         int n = s.length();
         int[] dp = new int[n + 1];
-        dp[0] = 1;
-        dp[1] = 1;
+
+        dp[0] = 1; //empty string has 1 way
+        dp[1] = 1; //first char already checked (not '0')
+
         for (int i = 2; i <= n; i++) {
+           // Extract last 1 digit and last 2 digits
             int oneDigit = Integer.parseInt(s.substring(i - 1, i));
             int twoDigit = Integer.parseInt(s.substring(i - 2, i));
-            if (oneDigit >= 1)              dp[i] += dp[i - 1];
-            if (twoDigit >= 10 && twoDigit <= 26) dp[i] += dp[i - 2];
+
+            //If single digit valid → add ways from previous index
+            if (oneDigit >= 1)
+                dp[i] += dp[i - 1];
+
+            //If two digits valid → add ways from two steps back
+            if (twoDigit >= 10 && twoDigit <= 26)
+                dp[i] += dp[i - 2];
         }
-        return dp[n];
+        return dp[n]; //Final answer is stored in dp[n]
     }
 
 
-    // ============================================================
-    // Q21: Palindrome Partitioning
-    // Approach: Backtracking — try every partition, check palindrome
-    // Time: O(n * 2^n), Space: O(n)
-    // ============================================================
+    /* ============================================================
+     Q21: Palindrome Partitioning
+     Approach: Backtracking — try every partition, check palindrome
+     Time: O(n * 2^n), Space: O(n)
+🔁 How the Algorithm Works
+                         Start from index 0
+                         Try all possible substrings
+                         If substring is a palindrome → choose → explore → backtrack
+     ============================================================
+     Que: Given a string s, partition the string such that every substring of the partition is a palindrome.
+          Return all possible palindrome partitionings of the string.
+     Example 1:
+             Input: s = "aab"
+             Output: [["a","a","b"],["aa","b"]]
+
+     */
     public static List<List<String>> palindromePartition(String s) {
         List<List<String>> result = new ArrayList<>();
         backtrack(s, 0, new ArrayList<>(), result);
@@ -433,14 +539,94 @@ public class StringDSA30Questions {
             return;
         }
         for (int end = start + 1; end <= s.length(); end++) {
-            String sub = s.substring(start, end);
+            String sub = s.substring(start, end);  // substring(start, end) here start → inclusive   end → exclusive (NOT included)
             if (isPalindrome(sub)) {
-                current.add(sub);
-                backtrack(s, end, current, result);
-                current.remove(current.size() - 1);
+                current.add(sub); // → choose
+                backtrack(s, end, current, result);// →  explore          // → go forward
+                current.remove(current.size() - 1);// → undo        //→ remove last block and try a different one
             }
         }
     }
+    /*
+🌳Example 1:  "aabcc"
+
+Start: [], index = 0
+1️⃣ Pick "a" (0→1) ✅ palindrome
+
+Current → ["a"]
+
+From index = 1
+2️⃣ Pick "a" (1→2) ✅
+
+Current → ["a", "a"]
+
+From index = 2
+3️⃣ Pick "b" (2→3) ✅
+
+Current → ["a", "a", "b"]
+
+From index = 3
+4️⃣ Pick "c" (3→4) ✅
+
+Current → ["a", "a", "b", "c"]
+
+From index = 4
+5️⃣ Pick "c" (4→5) ✅
+
+Current → ["a", "a", "b", "c", "c"]
+
+👉 Reached end → ✅ ADD RESULT
+
+["a", "a", "b", "c", "c"]
+🔙 Backtrack to index = 3
+
+Try "cc" (3→5) ✅ palindrome
+Current → ["a", "a", "b", "cc"]
+
+👉 Reached end → ✅ ADD RESULT
+
+["a", "a", "b", "cc"]
+🔙 Backtrack to index = 2
+
+Try "bc" ❌
+Try "bcc" ❌
+→ No more options → backtrack
+
+🔙 Backtrack to index = 1
+
+Try "ab" ❌
+Try "abc" ❌
+Try "abcc" ❌
+
+🔙 Backtrack to index = 0
+6️⃣ Pick "aa" (0→2) ✅
+
+Current → ["aa"]
+
+From index = 2
+7️⃣ Pick "b" (2→3) ✅
+
+Current → ["aa", "b"]
+
+From index = 3
+8️⃣ Pick "c" → then "c"
+
+Result:
+
+["aa", "b", "c", "c"]
+9️⃣ Pick "cc"
+
+Result:
+
+["aa", "b", "cc"]
+✅ Final Output
+[
+  ["a", "a", "b", "c", "c"],
+  ["a", "a", "b", "cc"],
+  ["aa", "b", "c", "c"],
+  ["aa", "b", "cc"]
+]
+     */
 
 
     // ============================================================
