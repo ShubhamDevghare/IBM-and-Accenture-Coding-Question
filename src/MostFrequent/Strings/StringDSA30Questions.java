@@ -411,11 +411,20 @@ There may exists other ways to achieve this answer too.
         int left = 0, maxCount = 0, maxLen = 0;
 
         for (int right = 0; right < s.length(); right++) {
+
             maxCount = Math.max(maxCount, ++count[s.charAt(right) - 'A']);
 
+
+            //What each term means:
+                                     // right - left + 1 → current window size
+                                     // maxCount → count of the most frequent character in the window
+                                     // (window size - maxCount) → how many characters we need to replace
             // Window size - most frequent char > k → shrink from left
             while ((right - left + 1) - maxCount > k) {
-                count[s.charAt(left++) - 'A']--;
+                                                       // here,
+                count[s.charAt(left++) - 'A']--;              // We remove the leftmost character from the window
+                                                              // Decrease its frequency
+                                                              // Move left forward → window becomes smaller
             }
             maxLen = Math.max(maxLen, right - left + 1);
         }
