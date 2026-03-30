@@ -269,6 +269,7 @@ public class StringDSA30Questions {
     // Approach: Simulate — describe previous term in terms of counts
     // Time: O(2^n), Space: O(2^n)
     // ============================================================
+    // https://youtu.be/5uJitfSM3vk?si=2Jp0dnDO96KpQOYP
     public static String countAndSay(int n) {
         String result = "1";
         for (int i = 1; i < n; i++) {
@@ -303,16 +304,71 @@ public class StringDSA30Questions {
             int cur  = map.get(s.charAt(i));
             int next = (i + 1 < s.length()) ? map.get(s.charAt(i + 1)) : 0;
             result += (cur < next) ? -cur : cur;
+/*
+            🧠 Key Logic (VERY IMPORTANT)
+               👉 Normally: Left to Right → Add values
+               BUT 👇
+              👉 If a smaller value comes before a larger value → subtract
+       Examples:
+                 "VI" → 5 + 1 = 6
+                 "IV" → 5 - 1 = 4
+*/
         }
         return result;
     }
+    // ============================================================
+    // Q15 (b): Integer to Roman
+    // ============================================================
 
+    public String intToRoman(int num) {
+        int[] values = {
+                1000, 900, 500, 400,
+                100, 90, 50, 40,
+                10, 9, 5, 4, 1
+        };
+
+        String[] symbols = {
+                "M", "CM", "D", "CD",
+                "C", "XC", "L", "XL",
+                "X", "IX", "V", "IV", "I"
+        };
+
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < values.length; i++) {
+            while (num >= values[i]) {
+                result.append(symbols[i]);
+                num -= values[i];
+            }
+        }
+
+        return result.toString();
+    }
 
     // ============================================================
     // Q16: Implement strStr() (Find needle in haystack)
     // Approach: Sliding window comparison (KMP in production)
     // Time: O(n*m), Space: O(1)
     // ============================================================
+    /*
+ Problem Statement
+-------------------
+
+Given two strings:
+
+haystack → the main string
+needle → the substring to find
+
+👉 Return the index of the first occurrence of needle in haystack
+👉 If not found, return -1
+
+Example:
+Input:
+haystack = "hello"
+needle = "ll"
+Output: 2
+     */
+
     public static int strStr(String haystack, String needle) {
         if (needle.isEmpty()) return 0;
         int n = haystack.length(), m = needle.length();
@@ -407,8 +463,10 @@ There may exists other ways to achieve this answer too.
           If this condition fails → shrink the window
      */
     public static int characterReplacement(String s, int k) {
-        int[] count = new int[26];
-        int left = 0, maxCount = 0, maxLen = 0;
+        int[] count = new int[26];  // store frequency of A-Z
+        int left = 0;
+        int maxCount = 0;  // most frequent char in window
+        int maxLen = 0;
 
         for (int right = 0; right < s.length(); right++) {
 
@@ -421,11 +479,12 @@ There may exists other ways to achieve this answer too.
                                      // (window size - maxCount) → how many characters we need to replace
             // Window size - most frequent char > k → shrink from left
             while ((right - left + 1) - maxCount > k) {
-                                                       // here,
-                count[s.charAt(left++) - 'A']--;              // We remove the leftmost character from the window
-                                                              // Decrease its frequency
-                                                              // Move left forward → window becomes smaller
+
+                char leftChar = s.charAt(left);
+                count[leftChar - 'A']--; // Decrease its frequency
+                left++;                  // move window  // Move left forward → window becomes smaller
             }
+
             maxLen = Math.max(maxLen, right - left + 1);
         }
         return maxLen;
