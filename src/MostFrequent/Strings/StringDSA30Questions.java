@@ -263,14 +263,14 @@ public class StringDSA30Questions {
         return maxLen;
     }
 
-
     // ============================================================
     // Q14: Count and Say
     // Approach: Simulate — describe previous term in terms of counts
     // Time: O(2^n), Space: O(2^n)
     // ============================================================
     // https://youtu.be/5uJitfSM3vk?si=2Jp0dnDO96KpQOYP
-    public static String countAndSay(int n) {
+
+  /*  public static String countAndSay(int n) {
         String result = "1";
         for (int i = 1; i < n; i++) {
             StringBuilder sb = new StringBuilder();
@@ -287,8 +287,29 @@ public class StringDSA30Questions {
         }
         return result;
     }
+*/
+    // recursion Approch:
+  // https://youtu.be/5uJitfSM3vk?si=2Jp0dnDO96KpQOYP
+  public static String countAndSay(int n) {
+        if (n == 1) {
+            return "1";
+        }
+        //recursion
+        String say = countAndSay(n - 1);
+        StringBuilder result = new StringBuilder();
+        //process
+        for (int i = 0; i < say.length(); i++) {
+            int count = 1;
+            char ch = say.charAt(i);
 
-
+            while (i < say.length() - 1 && say.charAt(i) == say.charAt(i + 1)) {
+                count++;
+                i++;
+            }
+            result.append(count).append(ch);
+        }
+        return result.toString();
+    }
     // ============================================================
     // Q15: Roman to Integer
     // Approach: Map values; subtract if smaller value precedes larger
