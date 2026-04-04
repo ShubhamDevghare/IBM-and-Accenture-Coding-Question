@@ -187,6 +187,11 @@ public class StringDSA30Questions {
     // Approach: Iterate and count consecutive characters
     // Time: O(n), Space: O(n)
     // ============================================================
+    /*
+Example:
+String s = "aaabbc";
+Output:a3b2c
+     */
     public static String compress(String s) {
         if (s == null || s.isEmpty()) return s;
         StringBuilder sb = new StringBuilder();
@@ -209,6 +214,14 @@ public class StringDSA30Questions {
     // Approach: Split by spaces, reverse array, join
     // Time: O(n), Space: O(n)
     // ============================================================
+    /*
+String s = "the sky is blue";
+Output: blue is sky the
+Process:
+        Split → ["the", "sky", "is", "blue"]
+      Reverse → ["blue", "is", "sky", "the"]
+         Join → "blue is sky the"
+     */
     public static String reverseWords(String s) {
         String[] words = s.trim().split("\\s+");
         StringBuilder sb = new StringBuilder();
@@ -225,6 +238,24 @@ public class StringDSA30Questions {
     // Approach: s2 is rotation of s1 iff s2 is a substring of s1+s1
     // Time: O(n), Space: O(n)
     // ============================================================
+/*
+Example:
+-------String s1 = "abcd";
+       String s2 = "cdab";
+Output: true
+Process:
+       s1 + s1 = "abcdabcd"
+       "cdab" is a substring of "abcdabcd" ✅
+
+Example 2 (Not a Rotation) :
+---------------------------
+Input:  String s1 = "abcd";
+        String s2 = "acbd";
+Output: false
+Process:
+       s1 + s1 = "abcdabcd"
+       "acbd" is not a substring ❌
+ */
     public static boolean isRotation(String s1, String s2) {
         if (s1.length() != s2.length()) return false;
         return (s1 + s1).contains(s2);
