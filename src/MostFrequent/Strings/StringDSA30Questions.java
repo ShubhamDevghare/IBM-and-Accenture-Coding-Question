@@ -238,6 +238,22 @@ Process:
     // Approach: s2 is rotation of s1 iff s2 is a substring of s1+s1
     // Time: O(n), Space: O(n)
     // ============================================================
+    /*
+🔍 Example to understand
+Example 1:
+s1 = "abcd"
+
+All rotations of "abcd":
+
+"abcd" (no rotation)
+"bcda" (move 'a' to end)
+"cdab"
+"dabc"
+
+👉 So:
+s2 = "cdab"  ✅ valid rotation
+s2 = "acbd"  ❌ not a rotatio
+*/
 /*
 Example:
 -------String s1 = "abcd";
@@ -261,7 +277,6 @@ Process:
         return (s1 + s1).contains(s2);
     }
 
-
     // ============================================================
     // Q12: Remove Duplicate Characters
     // Approach: LinkedHashSet preserves order, removes dupes
@@ -281,14 +296,26 @@ Process:
     // Approach: Sliding Window + HashMap
     // Time: O(n), Space: O(min(n, m)) where m = charset size
     // ============================================================
+    /*
+Input:
+String s = "abcabcbb";
+Output:
+       3
+Explanation:
+            Longest substrings without repetition:
+            "abc" → length = 3
+            After that, repeats start
+     */
     public static int lengthOfLongestSubstring(String s) {
         Map<Character, Integer> map = new HashMap<>();
         int maxLen = 0, left = 0;
         for (int right = 0; right < s.length(); right++) {
-            char c = s.charAt(right);
-            if (map.containsKey(c) && map.get(c) >= left)
-                left = map.get(c) + 1;
-            map.put(c, right);
+            char ch = s.charAt(right);
+
+            if (map.containsKey(ch) && map.get(ch) >= left)
+                left = map.get(ch) + 1;
+
+            map.put(ch, right);
             maxLen = Math.max(maxLen, right - left + 1);
         }
         return maxLen;
